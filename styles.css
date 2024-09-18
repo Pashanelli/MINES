@@ -83,6 +83,17 @@ h1, p, ul {
     background-color: yellow;
 }
 
+/* Символ флажка */
+.flag::after {
+    content: '🚩'; /* Символ флажка */
+    font-size: 1.5em; /* Размер символа флажка */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block; /* Показываем символ флажка */
+}
+
 /* Кнопка перезапуска */
 button {
     background-color: #444;
