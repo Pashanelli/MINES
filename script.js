@@ -56,27 +56,29 @@ function createCellElement(x, y) {
     cellElement.classList.add("cell");
     
     // Обработка нажатий
-    cellElement.addEventListener("click", () => handleClick(x, y));
+    cellElement.addEventListener("click", () => {
+        if (gameEnded || board[x][y].revealed) return;
+        revealCell(x, y);
+    });
+
     cellElement.addEventListener("contextmenu", (event) => {
         event.preventDefault(); // Предотвращаем стандартное меню контекста
-        handleRightClick(x, y);
+    });
+
+    cellElement.addEventListener("mousedown", () => {
+        if (gameEnded || board[x][y].revealed) return;
+
+        cellElement.classList.add("flagging");
+    });
+
+    cellElement.addEventListener("mouseup", () => {
+        if (cellElement.classList.contains("flagging")) {
+            setFlag(x, y);
+            cellElement.classList.remove("flagging");
+        }
     });
 
     return cellElement;
-}
-
-// Обработка однократного нажатия
-function handleClick(x, y) {
-    if (gameEnded || board[x][y].revealed) return;
-
-    revealCell(x, y);
-}
-
-// Обработка двойного нажатия
-function handleRightClick(x, y) {
-    if (gameEnded || board[x][y].revealed) return;
-
-    setFlag(x, y);
 }
 
 // Установка флажка
