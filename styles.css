@@ -95,6 +95,21 @@ button {
     margin-top: 10px; /* Отступ сверху для кнопки */
 }
 
+/* Фон флажка */
+.cell.flagging {
+    background-color: yellow;
+}
+
+/* Обновлённый стиль флажка */
+.cell.flag {
+    background-color: yellow;
+}
+
+/* Символ мины */
+.cell.mine::before {
+    display: block; /* Показываем символ мины при взрыве */
+}
+
 button:hover {
     background-color: #666;
 }
