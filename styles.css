@@ -39,10 +39,12 @@ h1, p, ul {
     align-items: center;
     font-size: 18px;
     cursor: pointer;
+    color: black; /* Цвет текста для лучшей видимости */
 }
 
 .revealed {
     background-color: white;
+    color: black; /* Цвет текста после открытия клетки */
 }
 
 .mine {
