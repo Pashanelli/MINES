@@ -54,29 +54,35 @@ function generateBoard() {
 function createCellElement(x, y) {
     const cellElement = document.createElement("div");
     cellElement.classList.add("cell");
-    
-    // Обработка нажатий
-    cellElement.addEventListener("click", () => handleClick(x, y));
-    cellElement.addEventListener("contextmenu", (event) => {
-        event.preventDefault(); // Предотвращаем стандартное меню контекста
-        handleRightClick(x, y);
+
+    // Обработка одиночного и двойного нажатия
+    cellElement.addEventListener("click", (event) => {
+        if (event.detail === 1) {
+            // Одиночное нажатие для установки/удаления флажка
+            handleSingleClick(x, y);
+        }
+    });
+
+    cellElement.addEventListener("dblclick", () => {
+        // Двойное нажатие для открытия клетки
+        handleDoubleClick(x, y);
     });
 
     return cellElement;
 }
 
-// Обработка однократного нажатия
-function handleClick(x, y) {
-    if (gameEnded || board[x][y].revealed) return;
-
-    revealCell(x, y);
-}
-
-// Обработка двойного нажатия
-function handleRightClick(x, y) {
+// Обработка одиночного нажатия
+function handleSingleClick(x, y) {
     if (gameEnded || board[x][y].revealed) return;
 
     setFlag(x, y);
+}
+
+// Обработка двойного нажатия
+function handleDoubleClick(x, y) {
+    if (gameEnded || board[x][y].revealed) return;
+
+    revealCell(x, y);
 }
 
 // Установка флажка
