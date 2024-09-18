@@ -55,27 +55,18 @@ function createCellElement(x, y) {
     const cellElement = document.createElement("div");
     cellElement.classList.add("cell");
     
-    // Обработка нажатий
-    cellElement.addEventListener("click", () => {
+    // Обработка одиночного и двойного нажатия
+    cellElement.addEventListener("click", (event) => {
+        if (event.detail === 1) {
+            // Однократное нажатие
+            setFlag(x, y);
+        }
+    });
+
+    cellElement.addEventListener("dblclick", () => {
+        // Двойное нажатие
         if (gameEnded || board[x][y].revealed) return;
         revealCell(x, y);
-    });
-
-    cellElement.addEventListener("contextmenu", (event) => {
-        event.preventDefault(); // Предотвращаем стандартное меню контекста
-    });
-
-    cellElement.addEventListener("mousedown", () => {
-        if (gameEnded || board[x][y].revealed) return;
-
-        cellElement.classList.add("flagging");
-    });
-
-    cellElement.addEventListener("mouseup", () => {
-        if (cellElement.classList.contains("flagging")) {
-            setFlag(x, y);
-            cellElement.classList.remove("flagging");
-        }
     });
 
     return cellElement;
@@ -84,6 +75,7 @@ function createCellElement(x, y) {
 // Установка флажка
 function setFlag(x, y) {
     const cell = board[x][y];
+    if (cell.revealed) return; // Не устанавливаем флажок на открытых клетках
     if (cell.element.classList.contains("flag")) {
         cell.element.classList.remove("flag");
     } else {
