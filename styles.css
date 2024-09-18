@@ -5,7 +5,16 @@ body {
     color: white;
     text-align: center;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Высота экрана */
+}
+
+/* Контейнер для игрового поля, чтобы центрировать его */
+.container {
+    text-align: center;
 }
 
 /* Описание игры */
@@ -19,7 +28,6 @@ h1, p, ul {
     grid-template-columns: repeat(10, 30px);
     grid-template-rows: repeat(10, 30px);
     gap: 2px;
-    margin-bottom: 20px;
     background-color: gray; /* Серый фон для игрового поля */
     padding: 10px;
     border-radius: 10px;
