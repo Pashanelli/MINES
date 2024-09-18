@@ -55,31 +55,32 @@ function createCellElement(x, y) {
     const cellElement = document.createElement("div");
     cellElement.classList.add("cell");
     
-    let clickTimeout;
-
-    cellElement.addEventListener("click", (event) => {
-        if (event.detail === 1) { // Однократное нажатие
-            if (clickTimeout) {
-                clearTimeout(clickTimeout);
-                clickTimeout = null;
-            }
-            revealCell(x, y);
-        } else if (event.detail === 2) { // Двойное нажатие
-            if (clickTimeout) {
-                clearTimeout(clickTimeout);
-                clickTimeout = null;
-            }
-            setFlag(x, y);
-        }
+    // Обработка нажатий
+    cellElement.addEventListener("click", () => handleClick(x, y));
+    cellElement.addEventListener("contextmenu", (event) => {
+        event.preventDefault(); // Предотвращаем стандартное меню контекста
+        handleRightClick(x, y);
     });
 
     return cellElement;
 }
 
-// Установка флажка
-function setFlag(x, y) {
+// Обработка однократного нажатия
+function handleClick(x, y) {
     if (gameEnded || board[x][y].revealed) return;
 
+    revealCell(x, y);
+}
+
+// Обработка двойного нажатия
+function handleRightClick(x, y) {
+    if (gameEnded || board[x][y].revealed) return;
+
+    setFlag(x, y);
+}
+
+// Установка флажка
+function setFlag(x, y) {
     const cell = board[x][y];
     if (cell.element.classList.contains("flag")) {
         cell.element.classList.remove("flag");
@@ -134,4 +135,23 @@ function revealAdjacentCells(x, y) {
         for (let j = -1; j <= 1; j++) {
             const nx = x + i;
             const ny = y + j;
-            if (nx >= 0 && ny >= 0 && nx <
+            if (nx >= 0 && ny >= 0 && nx < boardSize && ny < boardSize) {
+                if (!board[nx][ny].revealed && !board[nx][ny].mine) {
+                    revealCell(nx, ny);
+                }
+            }
+        }
+    }
+}
+
+// Завершение игры
+function endGame(win) {
+    gameEnded = true;
+    alert(win ? "Поздравляем, вы победили!" : "Вы проиграли!");
+}
+
+// Перезапуск игры
+restartButton.addEventListener("click", generateBoard);
+
+// Запуск игры при загрузке страницы
+generateBoard();
