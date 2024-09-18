@@ -94,54 +94,6 @@ button {
     transition: background-color 0.3s;
     margin-top: 10px; /* Отступ сверху для кнопки */
 }
-/* Стиль для клетки */
-.cell {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #333;
-    display: inline-block;
-    box-sizing: border-box;
-    position: relative;
-}
-
-/* Флажок */
-.cell.flag {
-    background-color: yellow;
-}
-
-/* Открытая клетка */
-.cell.revealed {
-    background-color: lightgrey;
-}
-
-/* Символ мины */
-.cell.mine::before {
-    content: '💣'; /* Используйте подходящий символ */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Скрытие символа мин */
-.cell.revealed:not(.mine)::before {
-    content: '';
-}
-
-/* Фон флажка */
-.cell.flagging {
-    background-color: yellow;
-}
-
-/* Обновлённый стиль флажка */
-.cell.flag {
-    background-color: yellow;
-}
-
-/* Символ мины */
-.cell.mine::before {
-    display: block; /* Показываем символ мины при взрыве */
-}
 
 button:hover {
     background-color: #666;
