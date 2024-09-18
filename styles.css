@@ -81,6 +81,20 @@ h1, p, ul {
 .flag {
     background-color: yellow;
 }
+/* Фон флажка */
+.cell.flagging {
+    background-color: yellow;
+}
+
+/* Обновлённый стиль флажка */
+.cell.flag {
+    background-color: yellow;
+}
+
+/* Символ мины */
+.cell.mine::before {
+    display: block; /* Показываем символ мины при взрыве */
+}
 
 /* Кнопка перезапуска */
 button {
