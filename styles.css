@@ -1,40 +1,70 @@
+/* Устанавливаем синий фон для всей страницы */
 body {
+    background-color: blue;
     font-family: Arial, sans-serif;
+    color: white;
     text-align: center;
+    margin: 0;
+    padding: 20px;
 }
 
-#game-container {
-    margin: 20px auto;
-    width: 300px;
+/* Описание игры */
+h1, p, ul {
+    margin-bottom: 20px;
 }
 
-#game-board {
+/* Оформление поля */
+.game-board {
     display: grid;
     grid-template-columns: repeat(10, 30px);
     grid-template-rows: repeat(10, 30px);
     gap: 2px;
+    margin-bottom: 20px;
+    background-color: gray; /* Серый фон для игрового поля */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px black;
 }
 
+/* Оформление клеток */
 .cell {
     width: 30px;
     height: 30px;
-    background-color: #cccccc;
+    background-color: lightgray;
+    border: 1px solid #ccc;
+    text-align: center;
+    vertical-align: middle;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #999;
-    cursor: pointer;
     font-size: 18px;
+    cursor: pointer;
 }
 
-.cell.revealed {
-    background-color: #eeeeee;
+.revealed {
+    background-color: white;
 }
 
-.cell.mine {
+.mine {
     background-color: red;
 }
 
-#status {
-    margin-top: 10px;
+.flag {
+    background-color: yellow;
+}
+
+/* Кнопка перезапуска */
+button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #666;
 }
