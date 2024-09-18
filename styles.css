@@ -1,67 +1,100 @@
-/* Общие стили для страницы */
+/* Устанавливаем синий фон для всей страницы */
 body {
+    background-color: blue;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: blue; /* Фон страницы */
+    height: 100vh; /* Высота экрана */
+    overflow: hidden; /* Убираем полосу прокрутки */
 }
 
-/* Контейнер игрового поля */
-#game-board {
+/* Контейнер для игрового поля */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Описание игры */
+h1, p, ul {
+    margin-bottom: 10px; /* Уменьшаем отступы для мобильных устройств */
+    font-size: 16px; /* Подгоняем размер шрифта для мобильных устройств */
+}
+
+/* Оформление поля */
+.game-board {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    gap: 1px;
-    background-color: gray; /* Фон игрового поля */
-    width: 50vmin; /* Половина размера дисплея */
-    height: 50vmin; /* Половина размера дисплея */
-    position: relative;
+    grid-template-columns: repeat(10, 1fr); /* Клетки будут автоматически подстраиваться */
+    grid-template-rows: repeat(10, 1fr); /* Клетки будут автоматически подстраиваться */
+    gap: 1px; /* Меньший промежуток между клетками */
+    background-color: gray; /* Серый фон для игрового поля */
+    width: 50vw; /* Ширина игрового поля занимает 50% ширины экрана */
+    height: 50vw; /* Высота игрового поля равна ширине (квадратное поле) */
+    max-width: 50vh; /* Ограничиваем максимальную ширину, чтобы она не превышала высоту */
+    max-height: 50vh; /* Ограничиваем максимальную высоту, чтобы она не превышала ширину */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px black;
 }
 
-/* Стиль для клетки */
+/* Оформление клеток */
 .cell {
-    width: 100%;
-    height: 100%;
-    border: 1px solid #333;
-    box-sizing: border-box;
+    background-color: lightgray;
+    border: 1px solid #ccc;
     text-align: center;
-    vertical-align: middle;
-    font-size: 1.5em; /* Увеличьте размер шрифта для лучшей видимости чисел */
-    line-height: 1.5em; /* Увеличьте межстрочный интервал для центровки текста */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2vw; /* Шрифт пропорционален размеру экрана */
+    cursor: pointer;
+    color: black; /* Цвет текста для лучшей видимости */
+    position: relative; /* Необходимо для псевдоэлемента */
 }
 
-/* Флажок */
-.cell.flag::before {
-    content: '🚩'; /* Символ флажка */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Флаг при удерживании */
-.cell.flagging {
-    background-color: lightblue; /* Визуальное представление флажка во время удерживания */
-}
-
-/* Открытая клетка */
-.cell.revealed {
-    background-color: lightgrey;
-}
-
-/* Символ мины */
-.cell.mine::before {
+.cell::before {
     content: '💣'; /* Символ мины */
+    font-size: 1.5em; /* Размер символа мины */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: none; /* По умолчанию скрыт */
 }
 
-/* Скрытие символа мин */
-.cell.revealed:not(.mine)::before {
-    content: '';
+.revealed {
+    background-color: white;
+    color: black; /* Цвет текста после открытия клетки */
+}
+
+.mine {
+    background-color: red;
+}
+
+.mine::before {
+    display: block; /* Показываем символ мины при взрыве */
+}
+
+.flag {
+    background-color: yellow;
+}
+
+/* Кнопка перезапуска */
+button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Отступ сверху для кнопки */
+}
+
+button:hover {
+    background-color: #666;
 }
