@@ -56,37 +56,32 @@ function createCellElement(x, y) {
     cellElement.classList.add("cell");
     
     // Обработка нажатий
-    cellElement.addEventListener("click", () => {
-        if (gameEnded || board[x][y].revealed) return;
-        revealCell(x, y);
-    });
-
-    cellElement.addEventListener("mousedown", (event) => {
-        if (event.button === 0) { // Левый клик
-            cellElement.classList.add("flagging");
-        }
-    });
-
-    cellElement.addEventListener("mouseup", (event) => {
-        if (event.button === 0) { // Левый клик
-            if (cellElement.classList.contains("flagging")) {
-                setFlag(x, y);
-                cellElement.classList.remove("flagging");
-            }
-        }
-    });
-
+    cellElement.addEventListener("click", () => handleClick(x, y));
     cellElement.addEventListener("contextmenu", (event) => {
         event.preventDefault(); // Предотвращаем стандартное меню контекста
+        handleRightClick(x, y);
     });
 
     return cellElement;
 }
 
+// Обработка однократного нажатия
+function handleClick(x, y) {
+    if (gameEnded || board[x][y].revealed) return;
+
+    revealCell(x, y);
+}
+
+// Обработка двойного нажатия
+function handleRightClick(x, y) {
+    if (gameEnded || board[x][y].revealed) return;
+
+    setFlag(x, y);
+}
+
 // Установка флажка
 function setFlag(x, y) {
     const cell = board[x][y];
-    if (cell.revealed) return; // Не устанавливаем флажок на открытых клетках
     if (cell.element.classList.contains("flag")) {
         cell.element.classList.remove("flag");
     } else {
