@@ -22,7 +22,6 @@ function generateBoard() {
             const cell = {
                 revealed: false,
                 mine: false,
-                flagged: false,
                 adjacentMines: 0,
                 element: createCellElement(i, j)
             };
@@ -56,19 +55,37 @@ function createCellElement(x, y) {
     const cellElement = document.createElement("div");
     cellElement.classList.add("cell");
     
-    // Одинарный клик для установки/снятия флага
-    cellElement.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleFlag(x, y);
-    });
+    let clickTimeout;
 
-    // Двойной клик для открытия клетки
-    cellElement.addEventListener("dblclick", (e) => {
-        e.preventDefault();
-        revealCell(x, y);
+    cellElement.addEventListener("click", (event) => {
+        if (event.detail === 1) { // Однократное нажатие
+            if (clickTimeout) {
+                clearTimeout(clickTimeout);
+                clickTimeout = null;
+            }
+            revealCell(x, y);
+        } else if (event.detail === 2) { // Двойное нажатие
+            if (clickTimeout) {
+                clearTimeout(clickTimeout);
+                clickTimeout = null;
+            }
+            setFlag(x, y);
+        }
     });
 
     return cellElement;
+}
+
+// Установка флажка
+function setFlag(x, y) {
+    if (gameEnded || board[x][y].revealed) return;
+
+    const cell = board[x][y];
+    if (cell.element.classList.contains("flag")) {
+        cell.element.classList.remove("flag");
+    } else {
+        cell.element.classList.add("flag");
+    }
 }
 
 // Подсчёт мин рядом с клеткой
@@ -90,7 +107,7 @@ function countAdjacentMines(x, y) {
 
 // Открытие клетки
 function revealCell(x, y) {
-    if (gameEnded || board[x][y].revealed || board[x][y].flagged) return;
+    if (gameEnded || board[x][y].revealed) return;
 
     const cell = board[x][y];
     cell.revealed = true;
@@ -117,53 +134,4 @@ function revealAdjacentCells(x, y) {
         for (let j = -1; j <= 1; j++) {
             const nx = x + i;
             const ny = y + j;
-            if (nx >= 0 && ny >= 0 && nx < boardSize && ny < boardSize) {
-                if (!board[nx][ny].revealed && !board[nx][ny].mine) {
-                    revealCell(nx, ny);
-                }
-            }
-        }
-    }
-}
-
-// Установка или снятие флажка
-function toggleFlag(x, y) {
-    if (gameEnded || board[x][y].revealed) return;
-
-    const cell = board[x][y];
-    if (cell.flagged) {
-        cell.flagged = false;
-        cell.element.classList.remove("flag");
-        cell.element.textContent = "";
-    } else {
-        cell.flagged = true;
-        cell.element.classList.add("flag");
-        cell.element.textContent = "🚩";
-    }
-}
-
-// Открытие всех мин на поле
-function revealAllMines() {
-    for (let i = 0; i < boardSize; i++) {
-        for (let j = 0; j < boardSize; j++) {
-            const cell = board[i][j];
-            if (cell.mine) {
-                cell.element.classList.add("mine");
-                cell.revealed = true;
-            }
-        }
-    }
-}
-
-// Завершение игры
-function endGame(win) {
-    gameEnded = true;
-    revealAllMines();  // Показать все мины
-    alert(win ? "Поздравляем, вы победили!" : "Вы проиграли!");
-}
-
-// Перезапуск игры
-restartButton.addEventListener("click", generateBoard);
-
-// Запуск игры при загрузке страницы
-generateBoard();
+            if (nx >= 0 && ny >= 0 && nx <
