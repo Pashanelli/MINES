@@ -1,5 +1,5 @@
-const boardSize = 20;  // Размер поля
-const mineCount = 25;  // Количество мин
+const boardSize = 10;  // Размер поля
+const mineCount = 15;  // Количество мин
 
 let board;
 let revealedCount;
