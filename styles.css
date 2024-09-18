@@ -1,18 +1,41 @@
+/* Общие стили для страницы */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: blue; /* Фон страницы */
+}
+
+/* Контейнер игрового поля */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 1px;
+    background-color: gray; /* Фон игрового поля */
+    width: 50vmin; /* Половина размера дисплея */
+    height: 50vmin; /* Половина размера дисплея */
+    position: relative;
+}
+
 /* Стиль для клетки */
 .cell {
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    height: 100%;
     border: 1px solid #333;
-    display: inline-block;
     box-sizing: border-box;
-    position: relative;
     text-align: center;
     vertical-align: middle;
+    font-size: 1.5em; /* Увеличьте размер шрифта для лучшей видимости чисел */
+    line-height: 1.5em; /* Увеличьте межстрочный интервал для центровки текста */
 }
 
 /* Флажок */
 .cell.flag::before {
-    content: '🚩'; /* Используйте символ флажка */
+    content: '🚩'; /* Символ флажка */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -31,7 +54,7 @@
 
 /* Символ мины */
 .cell.mine::before {
-    content: '💣'; /* Используйте подходящий символ */
+    content: '💣'; /* Символ мины */
     position: absolute;
     top: 50%;
     left: 50%;
