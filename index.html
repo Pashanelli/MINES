@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="game-container">
-        <h1>Сапёр</h1>
-        <div id="game-board"></div>
-        <div id="status">
-            <button id="restart">Начать заново</button>
-        </div>
-    </div>
+    <h1>Игра "Сапёр"</h1>
+    <p>Инструкция:</p>
+    <ul>
+        <li>Однократное нажатие на клетку: установить флажок.</li>
+        <li>Двойное нажатие на клетку: открыть клетку.</li>
+        <li>Двойное нажатие на клетку с флажком: убрать флажок.</li>
+    </ul>
+    
+    <div id="game-board" class="game-board"></div>
+    <button id="restart">Перезапустить игру</button>
 
     <script src="script.js"></script>
 </body>
