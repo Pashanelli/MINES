@@ -14,7 +14,9 @@ body {
 
 /* Контейнер для игрового поля, чтобы центрировать его */
 .container {
+    display: inline-block; /* Позволяет контейнеру занимать только нужное пространство */
     text-align: center;
+    background-color: transparent; /* Убирает лишний фон */
 }
 
 /* Описание игры */
@@ -32,6 +34,7 @@ h1, p, ul {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px black;
+    margin: 0; /* Убирает лишние отступы */
 }
 
 /* Оформление клеток */
