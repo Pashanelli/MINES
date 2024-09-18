@@ -130,6 +130,9 @@ function revealCell(x, y) {
         revealAdjacentCells(x, y);
     }
 
+    // Удаляем флажок, если он был установлен
+    cell.element.classList.remove("flag");
+
     if (revealedCount === boardSize * boardSize - mineCount) {
         endGame(true);
     }
