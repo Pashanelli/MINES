@@ -1,5 +1,5 @@
 const boardSize = 10;  // Размер поля
-const mineCount = 15;  // Количество мин
+const mineCount = 10;  // Количество мин
 
 let board;
 let revealedCount;
@@ -22,6 +22,7 @@ function generateBoard() {
             const cell = {
                 revealed: false,
                 mine: false,
+                flagged: false,
                 adjacentMines: 0,
                 element: createCellElement(i, j)
             };
@@ -54,7 +55,19 @@ function generateBoard() {
 function createCellElement(x, y) {
     const cellElement = document.createElement("div");
     cellElement.classList.add("cell");
-    cellElement.addEventListener("click", () => revealCell(x, y));
+    
+    // Одинарный клик для установки/снятия флага
+    cellElement.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleFlag(x, y);
+    });
+
+    // Двойной клик для открытия клетки
+    cellElement.addEventListener("dblclick", (e) => {
+        e.preventDefault();
+        revealCell(x, y);
+    });
+
     return cellElement;
 }
 
@@ -77,7 +90,7 @@ function countAdjacentMines(x, y) {
 
 // Открытие клетки
 function revealCell(x, y) {
-    if (gameEnded || board[x][y].revealed) return;
+    if (gameEnded || board[x][y].revealed || board[x][y].flagged) return;
 
     const cell = board[x][y];
     cell.revealed = true;
@@ -113,9 +126,39 @@ function revealAdjacentCells(x, y) {
     }
 }
 
+// Установка или снятие флажка
+function toggleFlag(x, y) {
+    if (gameEnded || board[x][y].revealed) return;
+
+    const cell = board[x][y];
+    if (cell.flagged) {
+        cell.flagged = false;
+        cell.element.classList.remove("flag");
+        cell.element.textContent = "";
+    } else {
+        cell.flagged = true;
+        cell.element.classList.add("flag");
+        cell.element.textContent = "🚩";
+    }
+}
+
+// Открытие всех мин на поле
+function revealAllMines() {
+    for (let i = 0; i < boardSize; i++) {
+        for (let j = 0; j < boardSize; j++) {
+            const cell = board[i][j];
+            if (cell.mine) {
+                cell.element.classList.add("mine");
+                cell.revealed = true;
+            }
+        }
+    }
+}
+
 // Завершение игры
 function endGame(win) {
     gameEnded = true;
+    revealAllMines();  // Показать все мины
     alert(win ? "Поздравляем, вы победили!" : "Вы проиграли!");
 }
 
